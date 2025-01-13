@@ -1,5 +1,9 @@
 function addTodo() {
-    const todoTitle = dom.todoInput.value;
+    const todoTitle = dom.todoInput.value.trim();
+    if (!todoTitle) {
+        alert('Please enter a task title!');
+        return;
+    }
 
     const newTodo = {
         'task': todoTitle,
