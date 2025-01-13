@@ -1,97 +1,123 @@
-function addTask() {
-    const taskTitle = dom.taskInput.value.trim();
-    if (!taskTitle) {
-        alert('Please enter a task title!');
-        return;
+class Task {
+    constructor(title, completed = false) {
+        this.title = title;
+        this.completed = completed;
     }
 
-    const newTask = {
-        'task': taskTitle,
-        'completed': false
-    }
-
-    taskItems.push(newTask);
-
-    dom.taskInput.value = '';
-}
-
-function toggleTaskStatus(index) {
-    const task = taskItems[index];
-    task.completed =  !task.completed;
-
-}
-
-function deleteTask(index) {
-    taskItems.splice(index, 1);
-}
-
-function renderTasks() {
-    dom.taskList.innerHTML = '';
-    for (let i = 0; i < taskItems.length; i++) {
-        const task = taskItems[i];
-
-        dom.taskList.innerHTML += `
-            <li class="task-item" data-id="${i}">
-                <span class="${task.completed?'completed':''}">${task.task}</span>
-                <button class="complete-btn">${task.completed?'Undo':'Complete'}</button>
-                <button class="delete-btn">Delete</button>
-            </li>
-        `;
+    toggle() {
+        this.completed = !this.completed;
     }
 }
 
-const TASK_ACTIONS = {
-    'complete': toggleTaskStatus,
-    'delete': deleteTask
+
+class TaskManager{
+    constructor(){
+        this.tasks = this.loadTasks();
+    }
+
+    add(taskTitle) {
+        this.tasks.push(new Task(taskTitle));
+        this.saveTasks();
+    }
+
+    delete(index) {
+        this.tasks.splice(index, 1);
+        this.saveTasks();
+    }
+
+    toggle(index) {
+        this.tasks[index].toggle();
+        this.saveTasks();
+    }
+
+    loadTasks(){
+        const tasks = localStorage.getItem('tasks');
+        return tasks ? JSON.parse(tasks) : [];
+    }
+
+    saveTasks(){
+        localStorage.setItem('tasks', JSON.stringify(this.tasks))
+    }
 }
 
-// initialize state
-const taskItems = [
-    {
-        'task': 'Task 1',
-        'completed': false
-    },
-    {
-        'task': 'Task 2',
-        'completed': true
-    },
-];
 
-let dom;
+class UIManager{
+    constructor() {
+        this.dom = {
+            taskInput: document.getElementById('task-input'),
+            addTaskButton: document.getElementById('add-task'),
+            taskList: document.getElementById('task-list')
+        };
+        this.taskManager = new TaskManager();
 
-document.addEventListener('DOMContentLoaded', function(){
-    // Get DOM elements
-    dom = {
-        taskInput : document.getElementById('task-input'),
-        addTaskButton : document.getElementById('add-task'),
-        taskList : document.getElementById('task-list')
-    };
+        this.addEventListeners();
+        this.renderTasks();
 
-    dom.addTaskButton.addEventListener('click', (e)=>{
-        //change state
-        addTask();
-        //change UI
-        renderTasks();
-    })
+        // focus input
+        this.dom.taskInput.focus();
+    }
 
-    // delegate the delete and complete actions to task-list:
-    dom.taskList.addEventListener('click', function(e) {
-        let action = '';
+    addEventListeners(){
+        this.dom.addTaskButton.addEventListener('click', (e)=>{
+            this.addTask()
+        })
+        this.dom.taskInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                this.addTask();
+            }
+        });
+
+        this.dom.taskList.addEventListener('click', (e)=>{
+            this.deleteOrCompleteTask(e)
+        })
+    }
+
+    addTask(){
+        const taskTitle = this.dom.taskInput.value.trim();
+        if (!taskTitle) {
+            alert('Please enter a task title!');
+            return;
+        }
+
+        this.taskManager.add(taskTitle);
+        this.dom.taskInput.value = '';
+        this.renderTasks();
+    }
+
+    deleteOrCompleteTask(e){
+        let action = null;
 
         if(e.target.classList.contains('complete-btn')){
-            action='complete';
+            action=this.taskManager.toggle.bind(this.taskManager);
         }else if(e.target.classList.contains('delete-btn')){
-            action='delete';
+            action=this.taskManager.delete.bind(this.taskManager);
         }
 
         if(action){
-            const idx = e.target.parentElement.dataset.id;
+            const idx = Number(e.target.parentElement.dataset.id);
             //change state
-            TASK_ACTIONS[action](idx)
+            action(idx)
             //change UI
-            renderTasks();
+            this.renderTasks();
         }
-    })
+    }
 
-    renderTasks();
+    renderTasks() {
+        this.dom.taskList.innerHTML = '';
+
+        this.taskManager.tasks.forEach((task, idx)=>{
+            this.dom.taskList.innerHTML += `
+                <li class="task-item" data-id="${idx}">
+                    <span class="${task.completed?'completed':''}">${task.title}</span>
+                    <button class="complete-btn">${task.completed?'Undo':'Complete'}</button>
+                    <button class="delete-btn">Delete</button>
+                </li>
+            `;
+        })
+    }
+}
+
+
+document.addEventListener('DOMContentLoaded', function(){
+    new UIManager()
 });
