@@ -72,7 +72,6 @@ document.addEventListener('DOMContentLoaded', function(){
         addTask();
         //change UI
         renderTasks();
-        console.dir(taskItems);
     })
 
     // delegate the delete and complete actions to task-list:
