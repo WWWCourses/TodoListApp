@@ -16,7 +16,6 @@ function toggleComplete(index) {
 }
 function deleteTodo(index) {
     todoItems.splice(index, 1);
-
 }
 
 function renderTodos() {
@@ -31,33 +30,6 @@ function renderTodos() {
                 <button class="delete-btn">Delete</button>
             </li>
         `;
-
-        // TOFIX: Add event listenters to the buttons:
-        const completeBtn = document.querySelector(`li[data-id="${i}"]>.complete-btn`);
-        const deleteBtn = document.querySelector(`li[data-id="${i}"]>.delete-btn`);
-
-        completeBtn.addEventListener('click', (e)=>{
-            const index = completeBtn.parentElement.dataset.id;
-            console.log(`index: ${index}`);
-
-            //change state
-            toggleComplete(index);
-            //change UI
-            renderTodos();
-            console.dir(todoItems);
-        })
-
-        deleteBtn.addEventListener('click', (e)=>{
-            const index = completeBtn.parentElement.dataset.id;
-            console.log(`index: ${index}`);
-
-            //change state
-            deleteTodo(index);
-            //change UI
-            renderTodos();
-            console.dir(todoItems);
-        })
-
     }
 }
 
@@ -67,6 +39,11 @@ const dom = {
     addTodoButton : document.getElementById('add-todo'),
     todoList : document.getElementById('todo-list')
 };
+
+const taskActions = {
+    'complete': toggleComplete,
+    'delete': deleteTodo
+}
 
 // initialize state
 const todoItems = [
@@ -88,4 +65,23 @@ dom.addTodoButton.addEventListener('click', (e)=>{
     //change UI
     renderTodos();
     console.dir(todoItems);
+})
+
+// delegate the delete and complete actions to todo-list:
+dom.todoList.addEventListener('click', function(e) {
+    let action = '';
+
+    if(e.target.classList.contains('complete-btn')){
+        action='complete';
+    }else if(e.target.classList.contains('delete-btn')){
+        action='delete';
+    }
+
+    if(action){
+        const idx = e.target.parentElement.dataset.id;
+        //change state
+        taskActions[action](idx)
+        //change UI
+        renderTodos();
+    }
 })
