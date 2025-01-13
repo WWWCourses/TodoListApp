@@ -10,7 +10,9 @@ function addTask() {
         'completed': false
     }
 
-    taskItems.push(newTask)
+    taskItems.push(newTask);
+
+    dom.taskInput.value = '';
 }
 
 function toggleTaskStatus(index) {
