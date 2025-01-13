@@ -11,13 +11,16 @@ body {
 }
 
 /* Container for the todo list */
-#todo-list-container {
-    width: 300px;
+#app-container {
+    width: 500px;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
     box-sizing: border-box;
+}
+#todo-list{
+    padding: 0;
 }
 
 /* Input field for new todos */
@@ -59,7 +62,6 @@ body {
     border: 1px solid #ddd;
     border-radius: 4px;
 }
-
 
 .todo-item span {
     flex-grow: 1;
