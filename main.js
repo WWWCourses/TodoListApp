@@ -40,13 +40,6 @@ function renderTasks() {
     }
 }
 
-// Get DOM elements
-const dom = {
-    taskInput : document.getElementById('task-input'),
-    addTaskButton : document.getElementById('add-task'),
-    taskList : document.getElementById('task-list')
-};
-
 const taskActions = {
     'complete': toggleTaskStatus,
     'delete': deleteTask
@@ -64,31 +57,42 @@ const taskItems = [
     },
 ];
 
-renderTasks();
+let dom;
 
-dom.addTaskButton.addEventListener('click', (e)=>{
-    //change state
-    addTask();
-    //change UI
-    renderTasks();
-    console.dir(taskItems);
-})
+document.addEventListener('DOMContentLoaded', function(){
+    // Get DOM elements
+    dom = {
+        taskInput : document.getElementById('task-input'),
+        addTaskButton : document.getElementById('add-task'),
+        taskList : document.getElementById('task-list')
+    };
 
-// delegate the delete and complete actions to task-list:
-dom.taskList.addEventListener('click', function(e) {
-    let action = '';
-
-    if(e.target.classList.contains('complete-btn')){
-        action='complete';
-    }else if(e.target.classList.contains('delete-btn')){
-        action='delete';
-    }
-
-    if(action){
-        const idx = e.target.parentElement.dataset.id;
+    dom.addTaskButton.addEventListener('click', (e)=>{
         //change state
-        taskActions[action](idx)
+        addTask();
         //change UI
         renderTasks();
-    }
-})
+        console.dir(taskItems);
+    })
+
+    // delegate the delete and complete actions to task-list:
+    dom.taskList.addEventListener('click', function(e) {
+        let action = '';
+
+        if(e.target.classList.contains('complete-btn')){
+            action='complete';
+        }else if(e.target.classList.contains('delete-btn')){
+            action='delete';
+        }
+
+        if(action){
+            const idx = e.target.parentElement.dataset.id;
+            //change state
+            taskActions[action](idx)
+            //change UI
+            renderTasks();
+        }
+    })
+
+    renderTasks();
+});
