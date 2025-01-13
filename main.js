@@ -40,7 +40,7 @@ function renderTasks() {
     }
 }
 
-const taskActions = {
+const TASK_ACTIONS = {
     'complete': toggleTaskStatus,
     'delete': deleteTask
 }
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function(){
         if(action){
             const idx = e.target.parentElement.dataset.id;
             //change state
-            taskActions[action](idx)
+            TASK_ACTIONS[action](idx)
             //change UI
             renderTasks();
         }
