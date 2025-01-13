@@ -1,36 +1,37 @@
-function addTodo() {
-    const todoTitle = dom.todoInput.value.trim();
-    if (!todoTitle) {
+function addTask() {
+    const taskTitle = dom.taskInput.value.trim();
+    if (!taskTitle) {
         alert('Please enter a task title!');
         return;
     }
 
-    const newTodo = {
-        'task': todoTitle,
+    const newTask = {
+        'task': taskTitle,
         'completed': false
     }
 
-    todoItems.push(newTodo)
+    taskItems.push(newTask)
 }
 
-function toggleComplete(index) {
-    const todo = todoItems[index];
-    todo.completed =  !todo.completed;
+function toggleTaskStatus(index) {
+    const task = taskItems[index];
+    task.completed =  !task.completed;
 
 }
-function deleteTodo(index) {
-    todoItems.splice(index, 1);
+
+function deleteTask(index) {
+    taskItems.splice(index, 1);
 }
 
-function renderTodos() {
-    dom.todoList.innerHTML = '';
-    for (let i = 0; i < todoItems.length; i++) {
-        const todo = todoItems[i];
+function renderTasks() {
+    dom.taskList.innerHTML = '';
+    for (let i = 0; i < taskItems.length; i++) {
+        const task = taskItems[i];
 
-        dom.todoList.innerHTML += `
-            <li class="todo-item" data-id="${i}">
-                <span class="${todo.completed?'completed':''}">${todo.task}</span>
-                <button class="complete-btn">${todo.completed?'Undo':'Complete'}</button>
+        dom.taskList.innerHTML += `
+            <li class="task-item" data-id="${i}">
+                <span class="${task.completed?'completed':''}">${task.task}</span>
+                <button class="complete-btn">${task.completed?'Undo':'Complete'}</button>
                 <button class="delete-btn">Delete</button>
             </li>
         `;
@@ -39,18 +40,18 @@ function renderTodos() {
 
 // Get DOM elements
 const dom = {
-    todoInput : document.getElementById('todo-input'),
-    addTodoButton : document.getElementById('add-todo'),
-    todoList : document.getElementById('todo-list')
+    taskInput : document.getElementById('task-input'),
+    addTaskButton : document.getElementById('add-task'),
+    taskList : document.getElementById('task-list')
 };
 
 const taskActions = {
-    'complete': toggleComplete,
-    'delete': deleteTodo
+    'complete': toggleTaskStatus,
+    'delete': deleteTask
 }
 
 // initialize state
-const todoItems = [
+const taskItems = [
     {
         'task': 'Task 1',
         'completed': false
@@ -61,18 +62,18 @@ const todoItems = [
     },
 ];
 
-renderTodos();
+renderTasks();
 
-dom.addTodoButton.addEventListener('click', (e)=>{
+dom.addTaskButton.addEventListener('click', (e)=>{
     //change state
-    addTodo();
+    addTask();
     //change UI
-    renderTodos();
-    console.dir(todoItems);
+    renderTasks();
+    console.dir(taskItems);
 })
 
-// delegate the delete and complete actions to todo-list:
-dom.todoList.addEventListener('click', function(e) {
+// delegate the delete and complete actions to task-list:
+dom.taskList.addEventListener('click', function(e) {
     let action = '';
 
     if(e.target.classList.contains('complete-btn')){
@@ -86,6 +87,6 @@ dom.todoList.addEventListener('click', function(e) {
         //change state
         taskActions[action](idx)
         //change UI
-        renderTodos();
+        renderTasks();
     }
 })

@@ -10,7 +10,7 @@ body {
     margin: 0;
 }
 
-/* Container for the todo list */
+/* Container for the task list */
 #app-container {
     width: 500px;
     background-color: #fff;
@@ -19,12 +19,12 @@ body {
     padding: 20px;
     box-sizing: border-box;
 }
-#todo-list{
+#task-list{
     padding: 0;
 }
 
-/* Input field for new todos */
-#todo-input {
+/* Input field for new tasks */
+#task-input {
     box-sizing: border-box;
     padding: 10px;
     font-size: 16px;
@@ -34,8 +34,8 @@ body {
     margin-bottom: 10px;
 }
 
-/* Button to add a new todo */
-#add-todo {
+/* Button to add a new task */
+#add-task {
     padding: 10px 20px;
     font-size: 16px;
     width: 100%;
@@ -47,12 +47,12 @@ body {
     margin-bottom: 20px;
 }
 
-#add-todo:hover {
+#add-task:hover {
     background-color: #218838;
 }
 
-/* Style for each todo item */
-.todo-item {
+/* Style for each task item */
+.task-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -63,15 +63,15 @@ body {
     border-radius: 4px;
 }
 
-.todo-item span {
+.task-item span {
     flex-grow: 1;
 }
 
-.todo-item button {
+.task-item button {
     margin-left: 10px;
 }
 
-/* Style for completed todo items */
+/* Style for completed task items */
 .completed {
     text-decoration: line-through;
     color: #888;
