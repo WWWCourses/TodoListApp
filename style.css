@@ -11,13 +11,18 @@ body {
 }
 
 /* Container for the todo list */
-#todo-list-container {
-    width: 300px;
+#todo-container {
+    width: 600px;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
     box-sizing: border-box;
+}
+
+#todo-list{
+    padding: 0;
+    border:3px solid red;
 }
 
 /* Input field for new todos */

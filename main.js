@@ -31,33 +31,6 @@ function renderTodos() {
                 <button class="delete-btn">Delete</button>
             </li>
         `;
-
-        // TOFIX: Add event listenters to the buttons:
-        const completeBtn = document.querySelector(`li[data-id="${i}"]>.complete-btn`);
-        const deleteBtn = document.querySelector(`li[data-id="${i}"]>.delete-btn`);
-
-        completeBtn.addEventListener('click', (e)=>{
-            const index = completeBtn.parentElement.dataset.id;
-            console.log(`index: ${index}`);
-
-            //change state
-            toggleComplete(index);
-            //change UI
-            renderTodos();
-            console.dir(todoItems);
-        })
-
-        deleteBtn.addEventListener('click', (e)=>{
-            const index = completeBtn.parentElement.dataset.id;
-            console.log(`index: ${index}`);
-
-            //change state
-            deleteTodo(index);
-            //change UI
-            renderTodos();
-            console.dir(todoItems);
-        })
-
     }
 }
 
@@ -88,4 +61,17 @@ dom.addTodoButton.addEventListener('click', (e)=>{
     //change UI
     renderTodos();
     console.dir(todoItems);
+})
+
+dom.todoList.addEventListener('click', (e)=>{
+    console.log(e.target)
+    const idx = e.target.parentElement.dataset.id;
+
+    if(e.target.classList.contains('complete-btn')) {
+        todoItems[idx].completed = !todoItems[idx].completed;
+        renderTodos();
+    }else if(e.target.classList.contains('delete-btn')){
+        todoItems.splice(idx,1);
+        renderTodos();
+    }
 })
