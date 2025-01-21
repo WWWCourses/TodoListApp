@@ -22,7 +22,6 @@ body {
 
 #todo-list{
     padding: 0;
-    border:3px solid red;
 }
 
 /* Input field for new todos */
