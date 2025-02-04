@@ -1,12 +1,15 @@
 function addTodo() {
     const todoTitle = dom.todoInput.value;
+    //change server state
 
+    // change local state if server responded ok
     const newTodo = {
         'task': todoTitle,
         'completed': false
     }
 
-    todoItems.push(newTodo)
+    todoItems.push(newTodo);
+
 }
 
 function toggleComplete(index) {
@@ -41,17 +44,23 @@ const dom = {
     todoList : document.getElementById('todo-list')
 };
 
+async function getTasks(url) {
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log(data);
+        todoItems = [...data]
+        const newResponse = await fetch(`https://jsonplaceholder.typicode.com/users/${data.id}`)
+        const userData = await response.json()
+
+        console.log(data);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
 // initialize state
-const todoItems = [
-    {
-        'task': 'Task 1',
-        'completed': false
-    },
-    {
-        'task': 'Task 2',
-        'completed': true
-    },
-];
+const todoItems;
+getTasks();
 
 renderTodos();
 

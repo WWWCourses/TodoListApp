@@ -1,4 +1,10 @@
 {
-    "todos":[],
-    "users":[]
+  "todos": [
+    {
+      "id": "6286",
+      "title": "Todo1",
+      "completed": false
+    }
+  ],
+  "users": []
 }
