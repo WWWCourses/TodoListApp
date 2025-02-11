@@ -4,12 +4,17 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"npm run server\" \"npm run live\"",
+    "server": "json-server --watch ./db/db.json --port 3000",
+    "live": "live-server --no-browser --ignore='./db/'"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "json-server": "^1.0.0-beta.3"
+    "concurrently": "^9.1.2",
+    "json-server": "^1.0.0-beta.3",
+    "live-server": "^1.2.2"
   }
 }
