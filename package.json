@@ -4,10 +4,15 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"npm run server\" \"npm run live\"",
-    "server": "json-server --watch ./db/db.json --port 3000",
-    "live": "live-server --no-browser --ignore='./db/'"
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "concurrently \"npm run server\" \"npm run live\" \"npm run dev\"",
+      "server": "json-server --watch ./db/db.json --port 3000",
+      "live": "live-server --no-browser --ignore='./db/'",
+      "build": "tsc",
+      "dev": "tsc --watch",
+      "start:prod": "npm run build && live-server dist"
+    }
   },
   "keywords": [],
   "author": "",

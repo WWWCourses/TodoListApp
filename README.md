@@ -21,6 +21,31 @@ A simple Todo List app that allows users to add, complete, and delete tasks. It 
 - `concurrently`: Used to run both `json-server` and `live-server` in parallel.
 
 
+## Project Structure
+```
+my-todo-app/
+│
+├── dist/                        # Compiled JavaScript (generated after `tsc`)
+├── db/                          # JSON data for mock API
+│   └── db.json                  # Mock data file
+├── src/                         # Source files (TypeScript)
+│   ├── components/              # Components (like TodoList, TodoItem)
+│   │   └── TodoList.ts          # Todo list component logic
+│   │   └── TodoItem.ts          # Todo item component logic
+│   ├── models/                  # TypeScript interfaces/types
+│   │   └── Todo.ts              # Interface for Todo item
+│   ├── services/                # API interaction logic
+│   │   └── apiService.ts        # API functions (get, post, etc.)
+│   ├── utils/                   # Utility functions
+│   │   └── domUtils.ts          # DOM manipulation functions
+│   ├── app.ts                   # Main app logic and entry point
+│   └── index.ts                 # Entry point for bundling TypeScript files
+├── .gitignore                   # Files to ignore by Git
+├── package.json                 # Project dependencies and scripts
+├── tsconfig.json                # TypeScript configuration
+└── README.md                    # Project documentation
+```
+
 ## Setup
 
 1. Clone the repository:
