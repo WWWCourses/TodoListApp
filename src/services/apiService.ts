@@ -17,7 +17,7 @@ async function getTodos(): Promise<Todo[]> {
 }
 
 // Create a new todo via the API
-async function createTodo(newTodo: Todo): Promise<Todo> {
+async function createTodo(newTodo: Omit<Todo,'id'>): Promise<Todo> {
     try {
         const response = await fetch(API_URL, {
             method: 'POST',

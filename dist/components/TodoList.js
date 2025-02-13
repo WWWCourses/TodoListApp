@@ -30,6 +30,8 @@ function setupTodoListClick(todoItems) {
     todoList.addEventListener('click', (e) => {
         const target = e.target;
         const todoItem = target.closest('.todo-item');
+        if (!todoItem)
+            return;
         const todoId = todoItem.dataset.id;
         if (!todoId)
             return;

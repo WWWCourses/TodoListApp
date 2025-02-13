@@ -34,9 +34,11 @@ function setupTodoListClick(todoItems: Todo[]): void {
 
     todoList.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
-        const todoItem = target.closest('.todo-item') as HTMLElement;
-        const todoId = todoItem.dataset.id;
 
+        const todoItem = target.closest('.todo-item') as HTMLElement;
+        if(!todoItem) return;
+
+        const todoId = todoItem.dataset.id;
         if (!todoId) return;
 
         const todo = todoItems.find(item => item.id === todoId);
