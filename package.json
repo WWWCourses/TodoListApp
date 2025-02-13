@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently \"npm run server\" \"npm run live\"",
     "server": "json-server --watch ./db/db.json --port 3000",
-    "live": "live-server --no-browser --ignore='./db/'"
+    "live": "live-server --no-browser --ignore='**/db/**'"
   },
   "keywords": [],
   "author": "",
