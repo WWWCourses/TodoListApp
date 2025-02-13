@@ -36,8 +36,6 @@ my-todo-app/
 │   │   └── Todo.ts              # Interface for Todo item
 │   ├── services/                # API interaction logic
 │   │   └── apiService.ts        # API functions (get, post, etc.)
-│   ├── utils/                   # Utility functions
-│   │   └── domUtils.ts          # DOM manipulation functions
 │   ├── app.ts                   # Main app logic and entry point
 │   └── index.ts                 # Entry point for bundling TypeScript files
 ├── .gitignore                   # Files to ignore by Git
